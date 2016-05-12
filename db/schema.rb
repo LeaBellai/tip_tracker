@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512003101) do
+ActiveRecord::Schema.define(version: 20160512224151) do
+
+  create_table "tips", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.float    "monday_amount"
+    t.float    "tuesday_amount"
+    t.float    "wednesday_amount"
+    t.float    "thursday_amount"
+    t.float    "friday_amount"
+    t.float    "saturday_amount"
+    t.float    "sunday_amount"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

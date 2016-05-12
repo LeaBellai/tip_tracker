@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @tip.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @tip.end_date %>
+</p>
+
+<p>
+  <strong>Monday amount:</strong>
+  <%= @tip.monday_amount %>
+</p>
+
+<p>
+  <strong>Tuesday amount:</strong>
+  <%= @tip.tuesday_amount %>
+</p>
+
+<p>
+  <strong>Wednesday amount:</strong>
+  <%= @tip.wednesday_amount %>
+</p>
+
+<p>
+  <strong>Thursday amount:</strong>
+  <%= @tip.thursday_amount %>
+</p>
+
+<p>
+  <strong>Friday amount:</strong>
+  <%= @tip.friday_amount %>
+</p>
+
+<p>
+  <strong>Saturday amount:</strong>
+  <%= @tip.saturday_amount %>
+</p>
+
+<p>
+  <strong>Sunday amount:</strong>
+  <%= @tip.sunday_amount %>
+</p>
+
+<%= link_to 'Edit', edit_tip_path(@tip) %> |
+<%= link_to 'Back', tips_path %>

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :tips
+  resources :tips
+  resources :tips
+  resources :tips
+  resources :tips
   devise_for :users
   get 'welcome/index'
 
