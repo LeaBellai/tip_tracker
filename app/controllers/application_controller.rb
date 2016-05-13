@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
 
    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:email, :password, :password_confirmation, 
      :current_password, :name  ) }
+  def after_sign_in_path_for(resource)
+    if session[:user_return_to] == nil
+      tips_path
+    else
+      super
+    end
+  end
 
  end
 end

@@ -1,6 +1,7 @@
 class TipsController < ApplicationController
   before_action :set_tip, only: [:show, :edit, :update, :destroy]
 
+  before_filter :authenticate_user!
   # GET /tips
   # GET /tips.json
   def index
@@ -69,6 +70,6 @@ class TipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tip_params
-      params.require(:tip).permit(:start_date, :end_date, :monday_amount, :tuesday_amount, :wednesday_amount, :thursday_amount, :friday_amount, :saturday_amount, :sunday_amount)
+      params.require(:tip).permit(:start_date, :end_date, :monday_amount, :tuesday_amount, :wednesday_amount, :thursday_amount, :friday_amount, :saturday_amount, :sunday_amount, :user_id)
     end
 end

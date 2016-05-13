@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512224151) do
+ActiveRecord::Schema.define(version: 20160513184314) do
 
   create_table "tips", force: :cascade do |t|
     t.date     "start_date"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20160512224151) do
     t.float    "sunday_amount"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|

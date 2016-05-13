@@ -10,7 +10,10 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="field" hidden>
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id, value: current_user.id %>
+  </div>
   <div class="field">
     <%= f.label :start_date %><br>
     <%= f.date_select :start_date %>
