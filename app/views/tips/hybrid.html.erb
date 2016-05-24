@@ -1,0 +1,55 @@
+<!-- adding graph-->
+<div class="row">
+  <div class= "col-md-2"></div>
+  <figure class="chart">
+    <canvas id="chart-0" width=1000 height=500></canvas>
+    <!-- legend rendered here -->
+  </figure>
+  <script type="text/javascript">
+    (function() {
+      var initChart = function() {
+        var data = 
+        {
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [ <%= @tips[0].monday_amount %>, <%= @tips[0].tuesday_amount %>, <%= @tips[0].wednesday_amount %>, <%= @tips[0].thursday_amount %>, <%= @tips[0].friday_amount %>, <%= @tips[0].saturday_amount %>, <%= @tips[0].sunday_amount %>]
+                },
+            ]
+        }
+        var opts = {"scaleFontSize":15};
+        if (!("animation" in opts)) {
+          opts['animation'] = (typeof Modernizr == "undefined") || Modernizr.canvas;
+        }
+        var canvas = document.getElementById("chart-0");
+        var ctx = canvas.getContext('2d');
+        var chart = new Chart(ctx).Bar(data, opts);
+        window.Chart["chart-0"] = chart;
+
+        //creating graph without legend
+        //var legend = chart.generateLegend();
+        //var legendHolder = document.createElement("div");
+        //legendHolder.innerHTML = legend;
+        //canvas.parentNode.insertBefore(legendHolder.firstChild, canvas.nextSibling);
+      };
+      if (typeof Chart !== "undefined" && Chart !== null) {
+        initChart();
+      }
+      else {
+        if (window.addEventListener) {
+          window.addEventListener("load", initChart, false);
+        }
+        else if (window.attachEvent) {
+          window.attachEvent("onload", initChart);
+        }
+      }
+    })();
+  </script>
+</div>

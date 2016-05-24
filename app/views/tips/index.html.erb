@@ -1,5 +1,12 @@
 <!-- adding graph-->
 <div class="row">
+  <div class="col-md-8">
+  </div>
+  <div class = "total" id = "header total">
+    <p> Total <%= @tips[-1].monday_amount + @tips[-1].tuesday_amount + @tips[-1].wednesday_amount + @tips[-1].thursday_amount + @tips[-1].friday_amount + @tips[-1].saturday_amount + @tips[-1].sunday_amount %> </p>
+  </div>
+</div>
+<div class="row">
   <div class= "col-md-2"></div>
   <figure class="chart">
     <canvas id="chart-0" width=1000 height=500></canvas>
@@ -25,7 +32,7 @@
                 },
             ]
         }
-        var opts = {"scaleFontSize":15};
+        var opts = {"scaleFontSize":15, "scaleShowGridLines":false};
         if (!("animation" in opts)) {
           opts['animation'] = (typeof Modernizr == "undefined") || Modernizr.canvas;
         }
@@ -34,11 +41,11 @@
         var chart = new Chart(ctx).Bar(data, opts);
         window.Chart["chart-0"] = chart;
 
-        //creating graph without legend
-        //var legend = chart.generateLegend();
-        //var legendHolder = document.createElement("div");
-        //legendHolder.innerHTML = legend;
-        //canvas.parentNode.insertBefore(legendHolder.firstChild, canvas.nextSibling);
+        // creating graph without legend
+        // var legend = chart.generateLegend();
+        // var legendHolder = document.createElement("div");
+        // legendHolder.innerHTML = legend;
+        // canvas.parentNode.insertBefore(legendHolder.firstChild, canvas.nextSibling);
       };
       if (typeof Chart !== "undefined" && Chart !== null) {
         initChart();
@@ -54,49 +61,93 @@
     })();
   </script>
 </div>
-  
 
-
+ 
 
 <% @tips.order('created_at ASC').reverse.each do |tip| %>
-    <% next if tip == @tips[-1] %>
-    <div class = "row">
-      <div class="col-md-1">
-        <%= tip.start_date %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.end_date %>
-      </div>       
-      <div class="col-md-1">
-        <%= tip.monday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.tuesday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.wednesday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.thursday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.friday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.saturday_amount %>
-      </div>
-      <div class="col-md-1">
-        <%= tip.sunday_amount %>
-      </div>
-      <div class="col-md-2">
-      </div> 
-      <div class="col-md-1">
-        <%= link_to("Show", tip)%>
-        <%= link_to("Edit", edit_tip_path(tip))%>
-        <%= link_to("Destroy", tip, method: :delete, data: { confirm: 'Are you sure?'})%>
-      </div>
-    </div>        
+  <% next if tip == @tips[-1] %>
+  <div id="chart_div"></div>
+  <script>
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart(){
+         var data = google.visualization.arrayToDataTable([
+           ['Day', 'Total', { role: 'style' }, { role: 'annotation' } ],
+           ['Monday', <%= tip.monday_amount %>, 'color: #e5e4e2', 'M' ],
+           ['Tuesday', <%= tip.tuesday_amount %>, 'color: #e5e4e2', 'T' ],
+           ['Wednesday', <%= tip.wednesday_amount %>, 'color: #e5e4e2', 'W' ],
+           ['Thursday', <%= tip.thursday_amount %>, 'color: #e5e4e2', 'R' ],
+           ['Friday', <%= tip.friday_amount %>, 'color: #e5e4e2', 'F' ],
+           ['Saturday', <%= tip.saturday_amount %>, 'color: #e5e4e2', 'Sat' ],
+           ['Sunday', <%= tip.sunday_amount %>, 'color: #e5e4e2', 'Sun' ]
+        ]);
+
+          var options = {
+            chartArea: {width: '50%'},
+            hAxis: {
+              title: 'Total Tips Week of:',
+              minValue: 0
+            },
+          };
+
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+  </script> 
+<%end%>
+
+<% @tips.order('created_at ASC').reverse.each do |tip| %>
+  <% next if tip == @tips[-1] %>
+  <div class = "row">
+    <div class = "col-md-6">
+    </div>
+    <div class= "col-md-3">
+      <p> Week of: <%= tip.start_date%>  <%=tip.end_date %></p>
+    </div>
+    <div class = "col-md-3" class = "total">
+      <p> Total: <%= tip.monday_amount + tip.tuesday_amount + tip.wednesday_amount + tip.thursday_amount + tip.friday_amount + tip.saturday_amount + tip.sunday_amount  %></p>
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-md-1">
+      <%= tip.start_date %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.end_date %>
+    </div>       
+    <div class="col-md-1">
+      <%= tip.monday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.tuesday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.wednesday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.thursday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.friday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.saturday_amount %>
+    </div>
+    <div class="col-md-1">
+      <%= tip.sunday_amount %>
+    </div>
+    <div class="col-md-2">
+    </div> 
+    <div class="col-md-1">
+      <%= link_to("Show", tip)%>
+      <%= link_to("Edit", edit_tip_path(tip))%>
+      <%= link_to("Destroy", tip, method: :delete, data: { confirm: 'Are you sure?'})%>
+    </div>
+  </div>        
 <% end %>
+
+
+
 
 
 
